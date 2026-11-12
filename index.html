@@ -1,19 +1,26 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
 <title>피아노 타일 다운로드</title>
 <style>
 body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#111;color:#eee;font-family:system-ui,sans-serif;text-align:center;padding:24px;box-sizing:border-box}
 h1{font-size:28px;margin:0 0 8px}p{color:#aaa;margin:6px 0}
-a.btn{display:inline-block;margin-top:28px;padding:18px 40px;border-radius:14px;background:#fff;color:#111;font-size:20px;font-weight:700;text-decoration:none}
-a.btn.done{background:#555;color:#ccc;pointer-events:none}
+button{margin-top:28px;padding:18px 40px;border:0;border-radius:14px;background:#fff;color:#111;font-size:20px;font-weight:700}
+button:disabled{background:#555;color:#ccc}
 </style></head><body>
 <h1>피아노 타일</h1>
 <p id="ver">v0.11</p>
-<a class="btn" id="dl" href="pianotiles.apk" download="pianotiles.apk">APK 받기</a>
+<button id="dl" type="button">APK 받기</button>
 <p style="margin-top:20px;font-size:13px">버튼을 한 번만 눌러 주세요. 받은 뒤 파일을 열어 설치하면 돼요.</p>
 <script>
-var b=document.getElementById('dl');
-b.addEventListener('click',function(){setTimeout(function(){b.classList.add('done');b.textContent='받는 중…';},50);});
+var b=document.getElementById('dl'),used=false;
+b.addEventListener('click',function(){
+  if(used)return;used=true;b.disabled=true;b.textContent='받는 중…';
+  var a=document.createElement('a');
+  a.href='pianotiles.apk?v='+encodeURIComponent(document.getElementById('ver').textContent);
+  a.setAttribute('download','pianotiles.apk');
+  document.body.appendChild(a);a.click();a.remove();
+});
 </script>
 </body></html>
